@@ -33,6 +33,9 @@ ls -l'''
       agent {
         dockerfile {
           filename 'Dockerfile'
+          additionalBuildArgs "--no-cache"
+          //registryUrl "${DOCKERIMAGEURL}"
+          registryCredentialsId "${DOCKERCREDENTIALS}"
         }
 
       }
@@ -43,11 +46,17 @@ ls -l'''
 
   }
   environment {
+    // home nessecary for running npm install
     HOME = '.'
+    DOCKERIMAGEURL = "https://hub.docker.com"
+    DOCKERCREDENTIALS = "Dockerhub"
+    IMAGENAME = "dengruns/vue-welcome-app"
   }
   post {
     cleanup {
+      // clean workspace
       cleanWs()
+      // remove tmp dir
       dir("${workspace}@tmp") {
         deleteDir()
       }
