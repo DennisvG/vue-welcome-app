@@ -19,8 +19,13 @@ ls -l'''
 
   }
   post { 
-        always { 
+        cleanup { 
+          /* clean up our workspace */
             cleanWs()
+          /* clean up tmp directory */
+            dir("${workspace}@tmp") {
+                deleteDir()
+            }
         }
     }
   environment {
