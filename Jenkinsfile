@@ -11,6 +11,8 @@ pipeline {
       steps {
         sh '''node --version
 npm --version'''
+        pwd()
+        sh 'npm install'
       }
     }
 
