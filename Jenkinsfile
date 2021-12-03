@@ -23,6 +23,24 @@ ls -l'''
       }
     }
 
+    stage('Build Application') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
+    stage('Build docker image') {
+      agent {
+        dockerfile {
+          filename 'Dockerfile'
+        }
+
+      }
+      steps {
+        echo 'Create Docker image'
+      }
+    }
+
   }
   environment {
     HOME = '.'
