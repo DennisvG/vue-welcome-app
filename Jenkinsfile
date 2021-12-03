@@ -17,18 +17,24 @@ ls -l'''
       }
     }
 
-  }
-  post { 
-        cleanup { 
-          /* clean up our workspace */
-            cleanWs()
-          /* clean up tmp directory */
-            dir("${workspace}@tmp") {
-                deleteDir()
-            }
-        }
+    stage('Test application') {
+      steps {
+        echo 'Application test'
+      }
     }
+
+  }
   environment {
     HOME = '.'
+  }
+  post {
+    cleanup {
+      cleanWs()
+      dir("${workspace}@tmp") {
+        deleteDir()
+      }
+
+    }
+
   }
 }
