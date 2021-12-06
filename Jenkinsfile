@@ -24,6 +24,7 @@ ls -l'''
     }
 
     stage('Build docker image') {
+      agent any
       steps {
         sh '''echo \'Create Docker image\'
         docker build -t $IMAGENAME:$BUILD_ID'''
