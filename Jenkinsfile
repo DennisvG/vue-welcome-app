@@ -25,9 +25,9 @@ ls -l'''
 
     stage('Build docker image') {
       steps {
-        sh '''echo 'Create Docker image'
+        sh '''echo \'Create Docker image\'
         docker build -t $IMAGENAME:$BUILD_ID'''
-        sh'''docker run -d --name $IMAGENAME-$BUILD_ID $IMAGENAME:$BUILD_ID
+        sh '''docker run -d --name $IMAGENAME-$BUILD_ID $IMAGENAME:$BUILD_ID
         sleep 6'''
         sh '''echo "container logging:"
         docker logs $IMAGENAME-$BUILD_ID'''
@@ -39,17 +39,14 @@ ls -l'''
 
   }
   environment {
-    // home nessecary for running npm install
     HOME = '.'
-    DOCKERIMAGEURL = "https://hub.docker.com"
-    DOCKERCREDENTIALS = "Dockerhub"
-    IMAGENAME = "dengruns/vue-welcome-app"
+    DOCKERIMAGEURL = 'https://hub.docker.com'
+    DOCKERCREDENTIALS = 'Dockerhub'
+    IMAGENAME = 'dengruns/vue-welcome-app'
   }
   post {
     cleanup {
-      // clean workspace
       cleanWs()
-      // remove tmp dir
       dir("${workspace}@tmp") {
         deleteDir()
       }
