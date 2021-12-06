@@ -15,6 +15,7 @@ pipeline {
         script {
           docker.withRegistry('', imageRegisterCredentials ) {
             dockerImage.push()
+            dockerImage.push(latest)
           }
         }
       }
