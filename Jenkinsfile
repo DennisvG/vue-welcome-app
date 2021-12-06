@@ -13,7 +13,7 @@ pipeline {
       steps {
         sh '''echo \'Push image to docker\' '''
         script {
-          docker.withRegistry(imageRegisterUrl, registryCredential ) {
+          docker.withRegistry(imageRegisterUrl, imageRegisterCredentials ) {
             dockerImage.push()
           }
         }
