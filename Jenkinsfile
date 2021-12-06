@@ -23,6 +23,12 @@ ls -l'''
       }
     }
 
+    stage('Build production dist') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
     stage('Build docker image') {
       agent any
       steps {
@@ -36,13 +42,7 @@ ls -l'''
         docker kill $IMAGENAME-$BUILD_ID
         docker rm $IMAGENAME-$BUILD_ID'''
       }
-    }
-
-    stage('Build production dist') {
-      steps {
-        sh 'npm run build'
-      }
-    }
+    }  
 
   }
   environment {
