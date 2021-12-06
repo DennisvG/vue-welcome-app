@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    any
-  }
+  agent any
   stages {
     stage('Init app') {
       agent {
@@ -42,9 +40,7 @@ ls -l'''
     }
 
     stage('Build docker image') {
-      agent {
-        any
-      }
+      agent any
       steps {
         sh '''echo \'Create Docker image\'
         docker build -t $IMAGENAME:$BUILD_ID'''
