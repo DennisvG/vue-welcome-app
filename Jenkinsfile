@@ -5,7 +5,8 @@ pipeline {
       agent any
       steps {
         sh '''echo \'Create Docker image\'
-        docker build -t $IMAGENAME:$BUILD_ID .'''
+        docker build -t $IMAGENAME:$BUILD_ID .
+        docker tag $IMAGENAME:$BUILD_ID $IMAGENAME:latest'''
         sh '''echo \'inspect Docker image\'
         docker inspect -f . $IMAGENAME:$BUILD_ID'''
       }
@@ -13,15 +14,13 @@ pipeline {
 
   }
   environment {
-    HOME = '.'
-    DOCKERIMAGEURL = 'https://hub.docker.com'
+    DOCKERIMAGEURL = ''
     DOCKERCREDENTIALS = 'Dockerhub'
     IMAGENAME = 'dengruns/vue-welcome-app'
   }
   post {
     cleanup {
-      cleanWs()
-      dir("${workspace}@tmp") {
+      dir("${workspace}*") {
         deleteDir()
       }
 
