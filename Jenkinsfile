@@ -2,25 +2,35 @@ pipeline {
   agent any
   stages {
     stage('Build docker image') {
-      agent any
       steps {
-        sh '''echo \'Create Docker image\'
-        docker build -t $IMAGENAME:$BUILD_ID .
-        docker tag $IMAGENAME:$BUILD_ID $IMAGENAME:latest'''
-        sh '''echo \'inspect Docker image\'
-        docker inspect -f . $IMAGENAME:$BUILD_ID'''
+        sh '''echo \'Create docker image\' '''
+        script {
+          dockerImage = docker.build imageName + ":$BUILD_ID"
+        }
       }
-    }  
+    }
+    stage('Push docker image') {
+      steps {
+        sh '''echo \'Push image to docker\' '''
+        script {
+          docker.withRegistry(imageRegisterUrl, registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
 
   }
   environment {
-    DOCKERIMAGEURL = ''
-    DOCKERCREDENTIALS = 'Dockerhub'
-    IMAGENAME = 'dengruns/vue-welcome-app'
+    imageRegisterUrl = ''
+    imageRegisterCredentials = 'Dockerhub'
+    imageName = 'dengruns/vue-welcome-app'
+    dockerImage=''
   }
   post {
     cleanup {
-      dir("${workspace}*") {
+      cleanWs()
+      dir("${workspace}@tmp") {
         deleteDir()
       }
 
