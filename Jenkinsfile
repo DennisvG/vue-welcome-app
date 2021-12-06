@@ -1,12 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:lts-alpine'
+    }
+  }
   stages {
     stage('Init app') {
-      agent {
-        docker {
-          image 'node:lts-alpine'
-        }
-      }
       steps {
         sh '''node --version
 npm --version
@@ -18,22 +17,12 @@ ls -l'''
     }
 
     stage('Test application') {
-      agent {
-        docker {
-          image 'node:lts-alpine'
-        }
-      }
       steps {
         echo 'Application test'
       }
     }
 
     stage('Build production dist') {
-      agent {
-        docker {
-          image 'node:lts-alpine'
-        }
-      }
       steps {
         sh 'npm run build'
       }
@@ -44,13 +33,6 @@ ls -l'''
       steps {
         sh '''echo \'Create Docker image\'
         docker build -t $IMAGENAME:$BUILD_ID'''
-        sh '''docker run -d --name $IMAGENAME-$BUILD_ID $IMAGENAME:$BUILD_ID
-        sleep 6'''
-        sh '''echo "container logging:"
-        docker logs $IMAGENAME-$BUILD_ID'''
-        sh '''echo "Stopping and remove docker container"
-        docker kill $IMAGENAME-$BUILD_ID
-        docker rm $IMAGENAME-$BUILD_ID'''
       }
     }  
 
