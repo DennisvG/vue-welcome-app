@@ -38,6 +38,12 @@ ls -l'''
       }
     }
 
+    stage('Build production dist') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
   }
   environment {
     HOME = '.'
