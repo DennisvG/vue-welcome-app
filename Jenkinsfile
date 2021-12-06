@@ -24,17 +24,16 @@ ls -l'''
     }
 
     stage('Build docker image') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile'
-          additionalBuildArgs "--no-cache"
-          //registryUrl "${DOCKERIMAGEURL}"
-          registryCredentialsId "${DOCKERCREDENTIALS}"
-        }
-
-      }
       steps {
-        echo 'Create Docker image'
+        sh '''echo 'Create Docker image'
+        docker build -t $IMAGENAME:$BUILD_ID'''
+        sh'''docker run -d --name $IMAGENAME-$BUILD_ID $IMAGENAME:$BUILD_ID
+        sleep 6'''
+        sh '''echo "container logging:"
+        docker logs $IMAGENAME-$BUILD_ID'''
+        sh '''echo "Stopping and remove docker container"
+        docker kill $IMAGENAME-$BUILD_ID
+        docker rm $IMAGENAME-$BUILD_ID'''
       }
     }
 
