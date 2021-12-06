@@ -1,12 +1,11 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:lts-alpine'
-    }
-
-  }
   stages {
     stage('Init app') {
+      agent {
+        docker {
+          image 'node:lts-alpine'
+        }
+      }
       steps {
         sh '''node --version
 npm --version
@@ -18,12 +17,22 @@ ls -l'''
     }
 
     stage('Test application') {
+      agent {
+        docker {
+          image 'node:lts-alpine'
+        }
+      }
       steps {
         echo 'Application test'
       }
     }
 
     stage('Build production dist') {
+      agent {
+        docker {
+          image 'node:lts-alpine'
+        }
+      }
       steps {
         sh 'npm run build'
       }
