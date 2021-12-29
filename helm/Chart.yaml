@@ -1,0 +1,9 @@
+apiVersion: v2
+name: vue-welcome-app
+description: Helm chart for vue-welcome-app
+
+type: application
+
+version: 0.1.0
+
+appVersion: "44"

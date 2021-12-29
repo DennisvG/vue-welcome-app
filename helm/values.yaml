@@ -1,0 +1,21 @@
+replicaCount: 1
+
+projectname: welcome-test
+
+image:
+  repository: dengruns/vue-welcome-app
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+  port: 8080
+
+service:
+  port: 8080
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
