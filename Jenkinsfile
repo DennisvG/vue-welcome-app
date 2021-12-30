@@ -31,6 +31,7 @@ pipeline {
     imageRegisterUrl = ''
     imageRegisterCredentials = 'Dockerhub'
     imageName = 'dengruns/vue-welcome-app'
+    applicationVersion = getAppVersion()
     dockerImage=''
   }
   post {
