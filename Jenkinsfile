@@ -1,3 +1,8 @@
+def getAppVersion() {
+  def pack = readJSON file: "package.json"
+  return pack.version
+}
+
 pipeline {
   agent any
   stages {
@@ -5,7 +10,7 @@ pipeline {
       steps {
         sh '''echo \'Create docker image\' '''
         script {
-          dockerImage = docker.build imageName + ":$BUILD_ID"
+          dockerImage = docker.build ("${imageName}:${applicationVersion}", "-f Dockerfile .")
         }
       }
     }

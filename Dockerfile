@@ -1,15 +1,25 @@
 # build stage app
 FROM node:lts-alpine as build-stage
 WORKDIR /app
-COPY package*.json ./
+# Copy proxy settingss for npm
+# COPY $WORKSPACE/.npmrc .npmrc
+COPY $WORKSPACE/package.json ./
+RUN npm install -g @vue/cli
 RUN npm install
 COPY . .
 RUN npm run build
+# Remove proxy settingss for npm
+# RUN rm -f .npmrc
 
 # build extra nginx modules
 FROM nginx:stable-alpine as build-nginx
 ENV MORE_HEADERS_VERSION=0.33
 ENV MORE_HEADERS_GITREPO=openresty/headers-more-nginx-module
+#ENV http_proxy="http://proxy.prd.duo.nl:8080"
+#ENV https_proxy="http://proxy.prd.duo.nl:8080"
+
+# fix for wget error in combination with proxy
+RUN apk --no-cache add openssl wget
 
 # Download sources
 RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -O nginx.tar.gz && \
