@@ -11,7 +11,7 @@ pipeline {
         sh 'mkdir ./tmp'
         sh 'wget "$dockerDownloadUrl/$dockerDownloadFile" -O ./tmp/docker.tgz'
         sh 'tar xvf ./tmp/docker.tgz -C ./tmp'
-        sh 'cp ./tmp/docker/* /usr/local/bin/'
+        sh 'cp ./tmp/docker/* ~/bin/'
       }
     }
     stage ('debug agent docker') {
