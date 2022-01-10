@@ -9,7 +9,7 @@ pipeline {
     stage ('init docker cmd') {
       steps {
         sh 'mkdir ./tmp'
-        sh 'curl "$dockerDownloadUrl/$dockerDownloadFile" --output ./tmp/docker.tgz'
+        sh 'wget "$dockerDownloadUrl/$dockerDownloadFile" -O ./tmp/docker.tgz'
         sh 'tar xvf ./tmp/docker.tgz'
         sh 'cp ./tmp/docker/* /usr/bin/'
       }
