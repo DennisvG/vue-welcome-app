@@ -48,7 +48,7 @@ pipeline {
     imageName = 'dengruns/vue-welcome-app'
     dockerImage=''
     dockerDownloadUrl = 'https://download.docker.com/linux/static/stable/x86_64/'
-    dockerDownloadVersion = 'docker-20.10.9.tgz'
+    dockerDownloadFile = 'docker-20.10.9.tgz'
   }
   post {
     cleanup {
