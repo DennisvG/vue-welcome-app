@@ -1,21 +1,23 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:lts-alpine'
+      args '-p 3000:3000'
+    }
+  }
   stages {
-    stage ('Debug docker cmd') {
+    stage ('init docker cmd') {
       steps {
-        sh 'echo "path setting: $PATH "'
-        sh 'which docker'
+        sh 'mkdir ./tmp'
+        sh 'curl "$dockerDownloadUrl/$dockerDownloadFile" --output ./tmp/docker.tgz'
+        sh 'tar xvf ./tmp/docker.tgz'
+        sh 'cp ./tmp/docker/* /usr/bin/'
       }
     }
     stage ('debug agent docker') {
-      agent {
-        docker {
-          image 'node:lts-alpine'
-          args '-p 3000:3000'
-        }
-      }
       steps {
         sh 'echo "path setting: $PATH "'
+        sh ''
         sh 'which docker'
       }
     }
@@ -45,6 +47,8 @@ pipeline {
     imageRegisterCredentials = 'Dockerhub'
     imageName = 'dengruns/vue-welcome-app'
     dockerImage=''
+    dockerDownloadUrl = 'https://download.docker.com/linux/static/stable/x86_64/'
+    dockerDownloadVersion = 'docker-20.10.9.tgz'
   }
   post {
     cleanup {
