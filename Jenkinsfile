@@ -50,14 +50,14 @@ pipeline {
     dockerDownloadUrl = 'https://download.docker.com/linux/static/stable/x86_64'
     dockerDownloadFile = 'docker-20.10.9.tgz'
   }
-  post {
-    cleanup {
-      cleanWs()
-      dir("${workspace}@tmp") {
-        deleteDir()
-      }
+  // post {
+  //   cleanup {
+  //     cleanWs()
+  //     dir("${workspace}@tmp") {
+  //       deleteDir()
+  //     }
 
-    }
+  //   }
 
-  }
+  // }
 }
