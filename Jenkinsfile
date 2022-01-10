@@ -10,14 +10,13 @@ pipeline {
       steps {
         sh 'mkdir ./tmp'
         sh 'wget "$dockerDownloadUrl/$dockerDownloadFile" -O ./tmp/docker.tgz'
-        sh 'tar xvf ./tmp/docker.tgz'
+        sh 'tar xvf ./tmp/docker.tgz -C ./tmp'
         sh 'cp ./tmp/docker/* /usr/bin/'
       }
     }
     stage ('debug agent docker') {
       steps {
         sh 'echo "path setting: $PATH "'
-        sh ''
         sh 'which docker'
       }
     }
