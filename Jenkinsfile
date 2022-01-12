@@ -21,25 +21,25 @@ pipeline {
         sh 'which docker'
       }
     }
-  //  stage('Build docker image') {
-    //   steps {
-    //     sh '''echo \'Create docker image\' '''
-    //     script {
-    //       dockerImage = docker.build imageName + ":$BUILD_ID"
-    //     }
-    //   }
-    // }
-    // stage('Push docker image') {
-    //   steps {
-    //     sh '''echo \'Push image to docker\' '''
-    //     script {
-    //       docker.withRegistry('', imageRegisterCredentials ) {
-    //         dockerImage.push()
-    //         dockerImage.push('latest')
-    //       }
-    //     }
-    //   }
-    // }
+   stage('Build docker image') {
+      steps {
+        sh '''echo \'Create docker image\' '''
+        script {
+          dockerImage = docker.build imageName + ":$BUILD_ID"
+        }
+      }
+    }
+    stage('Push docker image') {
+      steps {
+        sh '''echo \'Push image to docker\' '''
+        script {
+          docker.withRegistry('', imageRegisterCredentials ) {
+            dockerImage.push()
+            dockerImage.push('latest')
+          }
+        }
+      }
+    }
 
   }
   environment {
