@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'node:lts-alpine'
-      args '-e PATH=$PATH:$WORKSPACE/tools'
+      args '-e PATH $PATH:$WORKSPACE/tools'
       args '-p 3000:3000'
     }
   }
