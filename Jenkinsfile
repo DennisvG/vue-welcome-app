@@ -2,7 +2,6 @@ pipeline {
   agent {
     docker {
       image 'node:lts-alpine'
-      args '-e PATH $PATH:$WORKSPACE/tools'
       args '-p 3000:3000'
     }
   }
@@ -49,6 +48,7 @@ pipeline {
     dockerImage=''
     dockerDownloadUrl = 'https://download.docker.com/linux/static/stable/x86_64'
     dockerDownloadFile = 'docker-20.10.9.tgz'
+    PATH = $PATH:$WORKSPACE/tools
   }
   // post {
   //   cleanup {
