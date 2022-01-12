@@ -11,7 +11,7 @@ pipeline {
         sh 'mkdir ./tmp'
         sh 'wget "$dockerDownloadUrl/$dockerDownloadFile" -O ./tmp/docker.tgz'
         sh 'tar xvf ./tmp/docker.tgz -C ./tmp'
-        sh 'export PATH=$PATH:./tmp/docker'
+        sh 'export PATH=$PATH:`pwd`/tmp/docker'
       }
     }
     stage ('debug agent docker') {
