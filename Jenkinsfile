@@ -3,6 +3,7 @@ pipeline {
     docker {
       image 'node:lts-alpine'
       args '-p 3000:3000'
+      args '-e PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$WORKSPACE/tools'
     }
   }
   stages {
@@ -48,7 +49,7 @@ pipeline {
     dockerImage=''
     dockerDownloadUrl = 'https://download.docker.com/linux/static/stable/x86_64'
     dockerDownloadFile = 'docker-20.10.9.tgz'
-    PATH = '$PATH:$WORKSPACE/tools'
+    //PATH = '$PATH:$WORKSPACE/tools'
   }
   // post {
   //   cleanup {
