@@ -2,16 +2,17 @@ pipeline {
   agent {
     docker {
       image 'node:lts-alpine'
+      args '-e PATH=$PATH:$WORKSPACE/tools'
       args '-p 3000:3000'
     }
   }
   stages {
     stage ('init docker cmd') {
       steps {
-        sh 'mkdir ./tmp'
+        sh 'mkdir ./tmp ./tools'
         sh 'wget "$dockerDownloadUrl/$dockerDownloadFile" -O ./tmp/docker.tgz'
         sh 'tar xvf ./tmp/docker.tgz -C ./tmp'
-        sh 'export PATH=$PATH:`pwd`/tmp/docker'
+        sh 'cp ./tmp/docker/* ./tools/'
       }
     }
     stage ('debug agent docker') {
